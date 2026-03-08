@@ -8,12 +8,14 @@ std::string get_input()
 {
     std::string file_name;
     std::cout << "file name:";
-    std::cin >> file_name;
+    std::cin.ignore();
+    std::getline(std::cin, file_name);
     return file_name;
 }
 std::vector<std::string> read_from_file(std::string file_name)
 {
     std::fstream file(file_name, std::ios::in);
+    std::cout << "current file:" << file_name << "\n";
     std::vector<std::string> lines;
     if (file.is_open())
     {
@@ -61,10 +63,10 @@ int main(int argc, char *argv[])
             std::string user_input;
             do
             {
-                std::cout << "Enter :quit to quit or :continue to read other file:";
+                std::cout << "Enter :q to quit or :c to read other file ";
                 std::cin >> user_input;
-            } while (user_input != ":quit" && user_input != ":continue");
-            if (user_input == ":quit")
+            } while (user_input != ":q" && user_input != ":c");
+            if (user_input == ":q")
             {
                 continues = false;
             }
