@@ -13,25 +13,17 @@ std::string get_input()
     return file_name;
 }
 // take the decision string from user : and return booling variable
-bool decision()
+std::string decision()
 {
     std::string user_input_dec;
     do
     {
-        std::cout << "Enter :q to quit or :c to read other file\n";
+        std::cout << "Enter :q to quit or :r to read a file or :i to write into a file\n";
         std::cin >> user_input_dec;
-    } while (user_input_dec != ":q" && user_input_dec != ":c");
+    } while (user_input_dec != ":q" && user_input_dec != ":r" && user_input_dec != ":i");
 
-    if (user_input_dec == ":q")
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    return user_input_dec;
 }
-
 std::vector<std::string> read_from_file(std::string file_name)
 {
     std::fstream file(file_name, std::ios::in);
@@ -75,8 +67,10 @@ bool write_to_file(std::string file_name)
 
         while (std::getline(std::cin, input) && input != ":s")
         {
-            return true;
+            file << input << "\n";
         }
+        file.close();
+        return true;
     }
     else
     {
@@ -95,38 +89,35 @@ void print_content(std::vector<std::string> content)
 
 int main(int argc, char *argv[])
 {
-
+    bool continues = true;
+    std::string file_name;
     if (argc >= 2)
     {
-        bool continues = true;
-        std::string file_name = argv[1];
-
-        while (continues)
+        file_name = argv[1];
+    }
+    while (continues)
+    {
+        std::vector<std::string> file_content;
+        if (!file_name.empty())
+        {
+            file_content = read_from_file(file_name);
+            print_content(file_content);
+            file_content.clear();
+        }
+        std::string user_dec = decision();
+        if (user_dec == ":q")
+        {
+            continues = false;
+        }
+        else
         {
 
-            std::vector<std::string> file_content = read_from_file(file_name);
-            if (file_content.empty())
+            file_name = get_input();
+            if (user_dec == ":i")
             {
-                std::cout << "file is empty\n";
+                write_to_file(file_name);
             }
-            else
-            {
-                print_content(file_content);
-            }
-
-            if (!decision())
-            {
-                continues = false;
-            }
-            else
-
-                file_name = get_input();
         }
-    }
-
-    else
-    {
-        std::cout << "missing file name\n";
     }
 
     return 0;
