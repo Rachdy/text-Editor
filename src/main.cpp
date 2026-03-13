@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     while (continues)
     {
         std::vector<std::string> file_content;
-        if (!file_content.empty())
+        if (!file_name.empty() && file_content.empty())
         {
             file_content = read_from_file(file_name);
             print_content(file_content);
