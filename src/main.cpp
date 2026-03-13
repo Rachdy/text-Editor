@@ -78,7 +78,7 @@ bool write_to_file(std::string file_name)
         return false;
     }
 }
-void print_content(std::vector<std::string> content)
+void print_content(std::vector<std::string> &content)
 {
     size_t size = content.size();
     for (int i = 0; i < size; i++)
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     while (continues)
     {
         std::vector<std::string> file_content;
-        if (!file_name.empty())
+        if (!file_content.empty())
         {
             file_content = read_from_file(file_name);
             print_content(file_content);
