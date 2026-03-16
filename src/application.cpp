@@ -1,25 +1,20 @@
 
 #include <application.hpp>
-// function to get file name form user : return file name : string
-
-std::string get_input()
+// function to get file name form user:
+std::string application::File::get_file_name()
 {
-    std::string file_name;
     std::cout << "file name:";
     std::cin.ignore();
     std::getline(std::cin, file_name);
     return file_name;
 }
-// take the decision string from user : and return booling variable
-std::string application::decision()
+// take the input  from user :
+std::string application::controll()
 {
-    std::string user_input_dec;
-    do
-    {
-        std::cin >> user_input_dec;
-    } while (user_input_dec != ":q" && user_input_dec != ":r" && user_input_dec != ":i");
+    
 
-    return user_input_dec;
+
+    
 }
 bool application::File::read()
 {
@@ -34,12 +29,12 @@ bool application::File::read()
             lines.push_back(s);
         }
         file.close();
-        return lines;
+        return true;
     }
     else
     {
         std::cout << "Unable to open file.\n";
-        return lines;
+        return false;
     }
 }
 std::vector<std::string> read_content()
@@ -59,15 +54,7 @@ bool application::File::write()
     std::cout << "current file:" << file_name << "\n";
     if (file.is_open())
     {
-        std::string input;
-        std::cout << "write your new content: and type :s to save and close the file:\n";
-
-        while (std::getline(std::cin, input) && input != ":s")
-        {
-            file << input << "\n";
-        }
-        file.close();
-        return true;
+        
     }
     else
     {
@@ -75,11 +62,11 @@ bool application::File::write()
         return false;
     }
 }
-void application::rendering()
+void application::rendering(const  std::vector<std::string> & file_content)
 {
-    size_t size = content.size();
+    size_t size = file_content.size();
     for (int i = 0; i < size; i++)
     {
-        std::cout << content[i] << "\n";
+        std::cout << file_content[i] << "\n";
     }
 }
